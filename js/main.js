@@ -25,6 +25,10 @@
             y: defs.boxSize * 19
         }
     ];
+    let food = {
+        x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
+        y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
+    };
 
     let points = 0;
 
@@ -48,6 +52,11 @@
             ct.fillRect(snake[i].x, snake[i].y, defs.boxSize, defs.boxSize);
             green += sumColor;
         }
+    };
+
+    let createFood = () => {
+        ct.fillStyle = "green";
+        ct.fillRect(food.x, food.y, defs.boxSize, defs.boxSize);
     };
 
     /**
@@ -144,6 +153,7 @@
     let updateGame = () => {
         createBackground();
         createSnake();
+        createFood();
         moveSnake();
         colisionDetect();
         points++;

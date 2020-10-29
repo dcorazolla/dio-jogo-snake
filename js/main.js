@@ -1,4 +1,4 @@
-(function snakeGame(){
+// let snakeGame = () => {
 
     /**
      * Valores padrao
@@ -7,7 +7,7 @@
         bgColor: "#000",
         boxSize: 15,
         direction: "right",
-        transBorder: true,
+        transBorder: false,
         updateTime: 250
     };
 
@@ -33,6 +33,19 @@
     };
 
     let points = 0;
+    let render = 0;
+
+    let changeStatus = (el) => {
+        console.log(el.checked);
+        if (el.checked) {
+            el.checked = true;
+            defs.transBorder = true;
+        }
+        else {
+            el.checked = false;
+            defs.transBorder = false;
+        }
+    };
 
     /**
      * Desenha o fundo
@@ -54,12 +67,25 @@
             ct.fillRect(snake[i].x, snake[i].y, defs.boxSize, defs.boxSize);
             green += sumColor;
         }
+        points++;
     };
 
     let createFood = () => {
         ct.fillStyle = "green";
         ct.fillRect(food.x, food.y, defs.boxSize, defs.boxSize);
     };
+
+    let restart = () => {
+        clearInterval(interval);
+        snake = [
+            {
+                x: defs.boxSize * 19,
+                y: defs.boxSize * 19
+            }
+        ];
+        points = 0;
+        interval = setInterval(updateGame, defs.updateTime);
+    }
 
     /**
      * Movimenta cobra conforme direcao
@@ -183,6 +209,11 @@
      */
     let gameOver = () => {
         clearInterval(interval);
+        alert("Game over!");
+    };
+
+    let printData = () => {
+        document.getElementById("spnpontos").innerHTML = points;
     };
 
     document.addEventListener('keydown', getKey);
@@ -197,10 +228,13 @@
         createFood();
         moveSnake();
         colisionDetect();
-        points++;
+        printData();
+        render++;
         // setTimeout(updateGame, defs.updateTime);
     }
 
     let interval = setInterval(updateGame, defs.updateTime);
 
-})();
+// };
+
+// snakeGame();

@@ -8,6 +8,11 @@
 </head>
 <body>
     <canvas id="snake-game" width="600" height="600"></canvas>
+    <div id="painel">
+        <p><strong>Pontos</strong> <span id="spnpontos">0</span></p>
+        <p><label><strong>Atravessa bordas</strong> <input type="checkbox" onclick="changeStatus(this);" /></label></p>
+        <p><button id="btn-restart" onclick="restart(this);">Restart</button></p>
+    </div>
     <script src="./js/main.js"></script>
 </body>
 </html>

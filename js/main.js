@@ -16,6 +16,8 @@
     // pega o contexto 2d do canvas
     let ct = cv.getContext("2d");
 
+    let movimento = false;
+
     /**
      * A cobra
      */
@@ -96,10 +98,24 @@
      * @param {EventListener} event 
      */
     let getKey = (event) => {
-        if (event.keyCode == 37 && defs.direction != "right") defs.direction = "left";
-        else if (event.keyCode == 38 && defs.direction != "down") defs.direction = "up";
-        else if (event.keyCode == 39 && defs.direction != "left") defs.direction = "right";
-        else if (event.keyCode == 40 && defs.direction != "up") defs.direction = "down";
+        if (movimento == false) {
+            if (event.keyCode == 37 && defs.direction != "right") {
+                defs.direction = "left";
+                movimento = true;
+            }
+            else if (event.keyCode == 38 && defs.direction != "down") {
+                defs.direction = "up";
+                movimento = true;
+            }
+            else if (event.keyCode == 39 && defs.direction != "left") {
+                defs.direction = "right";
+                movimento = true;
+            }
+            else if (event.keyCode == 40 && defs.direction != "up") {
+                defs.direction = "down";
+                movimento = true;
+            }
+        }
     };
 
     /**
@@ -108,6 +124,7 @@
     let colisionDetectLeft = () => {
         if (snake[0].x < 0 && defs.direction=="left") {
             if (defs.transBorder == true) snake[0].x = defs.boxSize * 39;
+            else gameOver();
         }
     };
 
@@ -117,6 +134,7 @@
     let colisionDetectTop = () => {
         if (snake[0].y < 0 && defs.direction=="up") {
             if (defs.transBorder == true) snake[0].y = defs.boxSize * 39;
+            else gameOver();
         }
     };
 
@@ -126,6 +144,7 @@
     let colisionDetectBottom = () => {
         if (snake[0].y > defs.boxSize * 39 && defs.direction=="down") {
             if (defs.transBorder == true) snake[0].y = 0;
+            else gameOver();
         }
     };
 
@@ -135,6 +154,16 @@
     let colisionDetectRight = () => {
         if (snake[0].x > defs.boxSize * 39 && defs.direction=="right") {
             if (defs.transBorder == true) snake[0].x = 0;
+            else gameOver();
+        }
+    };
+
+    let colisionAuto = () => {
+        for (let i=1; i<snake.length; i++) {
+            if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+                gameOver();
+                break;
+            }
         }
     };
 
@@ -146,12 +175,15 @@
         colisionDetectTop();
         colisionDetectBottom();
         colisionDetectRight();
+        colisionAuto();
     };
 
     /**
      * Encerra o jogo
      */
-    let gameOver = () => {};
+    let gameOver = () => {
+        clearInterval(interval);
+    };
 
     document.addEventListener('keydown', getKey);
 
@@ -161,6 +193,7 @@
     let updateGame = () => {
         createBackground();
         createSnake();
+        movimento = false;
         createFood();
         moveSnake();
         colisionDetect();
@@ -168,6 +201,6 @@
         // setTimeout(updateGame, defs.updateTime);
     }
 
-    setInterval(updateGame, defs.updateTime);
+    let interval = setInterval(updateGame, defs.updateTime);
 
 })();

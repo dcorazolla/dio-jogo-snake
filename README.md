@@ -1,5 +1,6 @@
 # Jogo Snake
 Recriação do famoso jogo da cobrinha. HTML JavaScript CSS 
+![Imagem](https://github.com/dcorazolla/dio-jogo-snake/raw/main/img/print.png)
 
 Entrega do projeto de curso da Digital Inovation One
 

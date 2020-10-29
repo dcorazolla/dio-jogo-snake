@@ -10,6 +10,7 @@ Bootcamp: HTML Web Developer
 - Possiblidade de terminar o jogo em colisão com as bordas
 - Cobrinha moda de cor, do vermelho para o amarelo
 - Codigo JS escrito com arrow functions
+- Painel de controle com pontuacao, botao restart e mudança para atravessar bordas ou não
 
 ### Online
 [https://dcorazolla.github.io/dio-jogo-snake/](https://dcorazolla.github.io/dio-jogo-snake/)

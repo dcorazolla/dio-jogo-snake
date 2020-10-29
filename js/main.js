@@ -8,7 +8,7 @@
         boxSize: 15,
         direction: "right",
         transBorder: false,
-        updateTime: 250
+        updateTime: 200
     };
 
     // pega o canvas

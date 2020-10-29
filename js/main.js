@@ -18,6 +18,8 @@
     // pega o contexto 2d do canvas
     let ct = cv.getContext("2d");
 
+    let direction = "right";
+
     /**
      * A cobra
      */
@@ -46,7 +48,36 @@
         }
     };
 
-    createBackground();
-    createSnake();
+    let moveSnake = () => {
+        let posX = snake[0].x;
+        let posY = snake[0].y;
+        switch (direction) {
+            case "top":
+                posY -= defs.sizes.box;
+                break;
+            case "right":
+                posX += defs.sizes.box;
+                break;
+            case "down":
+                posY += defs.sizes.box;
+                break;
+            case "left":
+                posX -= defs.sizes.box;
+                break;
+        }
+        snake.pop();
+        snake.unshift({x: posX, y: posY});
+    }
+
+    /**
+     * As rodadas de renderizacao do jogo
+     */
+    let updateGame = () => {
+        createBackground();
+        createSnake();
+        moveSnake();
+    }
+
+    setInterval(updateGame, 250);
 
 })();

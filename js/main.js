@@ -79,7 +79,15 @@
                 posX -= defs.boxSize;
                 break;
         }
-        snake.pop();
+        if (posX != food.x || posY != food.y) {
+            snake.pop();
+        }
+        else {
+            food = {
+                x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
+                y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
+            };
+        }
         snake.unshift({x: posX, y: posY});
     }
 

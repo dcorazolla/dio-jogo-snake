@@ -20,6 +20,7 @@
         rodada: false,
         points: 0,
         fruits: 0,
+        level: 1
     };
 
     // pega o canvas
@@ -102,6 +103,7 @@
         startFood();
         defs.ended = false;
         defs.fruits = 0;
+        defs.level = 1;
         interval = setInterval(updateGame, defs.updateTime);
     }
 
@@ -262,8 +264,9 @@
     };
 
     let printData = () => {
-        document.getElementById("spnpontos").innerHTML = defs.points;
+        // document.getElementById("spnpontos").innerHTML = defs.points;
         document.getElementById("spnfrutas").innerHTML = defs.fruits;
+        document.getElementById("spnnivel").innerHTML = defs.level;
     };
 
     document.addEventListener('keydown', getKey);
@@ -341,10 +344,12 @@
         document.getElementById("btn-pause").style.display = "none";
     }
 
-    let contaPontos = () => {
+    let pointsCount = () => {
         defs.points++;
-        if (defs.points % 100 == 0 && defs.updateTime > 50) {
+        if (defs.points % (defs.level * 100) == 0 && defs.updateTime > 40) {
             defs.updateTime -= 10;
+            defs.level++;
+            defs.points = 0;
             clearInterval(interval);
             interval = setInterval(updateGame, defs.updateTime);
         }
@@ -366,7 +371,7 @@
                 moveSnake();
                 createFood();
                 colisionDetect();
-                contaPontos();
+                pointsCount();
                 render++;
             }
             defs.rodada = false;

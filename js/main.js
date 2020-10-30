@@ -84,12 +84,12 @@
 
     let restart = () => {
         clearInterval(interval);
-        snake = [
-            {
-                
-            }
-        ];
+        snake = [];
         points = 0;
+        food = {
+            x: Math.floor(Math.random() * 38 + 1) * defs.boxSize,
+            y: Math.floor(Math.random() * 38 + 1) * defs.boxSize
+        };
         interval = setInterval(updateGame, defs.updateTime);
     }
 
@@ -235,9 +235,8 @@
 
     let sizeModify = (width, height) => {
 
-        let oldWidth = defs.winWidth;
-        let oldHeight = defs.winHeight;
-        let oldBoxSize = defs.boxSize;
+        oldWidth = defs.gameWidth;
+        oldSize = defs.boxSize;
 
         defs.winWidth = width;
         defs.winHeight = height;
@@ -273,16 +272,14 @@
         cv.height = defs.gameHeight;
         pn.setAttribute("style","width:" + (defs.panelWidth - 20) + "px");
 
-        snakeSizeModify();
+        if (snake.length > 0) {
+            snakeSizeModify(oldWidth, oldSize);
+        }
     };
     
-    let snakeSizeModify = (boxSize, wid) => {
-        if (snake.length > 0) {
-            let propY = snake[0].y / defs.boxSize;
-            let propX = snake[0].x / defs.boxSize;
-            console.log(defs.boxSize);
-            console.log(defs.boxSize);
-            // console.log(propY);
+    let snakeSizeModify = (oldWidth, oldSize) => {
+        if (oldSize != defs.boxSize) {
+            restart();
         }
     };
 

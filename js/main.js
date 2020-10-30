@@ -15,7 +15,11 @@
         gameWidth: 0,
         gameHeight: 0,
         panelWidth: 0,
-        panelHeight: 0
+        panelHeight: 0,
+        ended: false,
+        rodada: false,
+        points: 0,
+        fruits: 0
     };
 
     // pega o canvas
@@ -30,10 +34,7 @@
      * A cobra
      */
     let snake = [];
-    let food = {
-        x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
-        y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
-    };
+    let food = null;
 
     let points = 0;
     let render = 0;
@@ -78,18 +79,28 @@
     };
 
     let createFood = () => {
+        if (food == null) {
+            startFood();
+        }
         ct.fillStyle = "green";
         ct.fillRect(food.x, food.y, defs.boxSize, defs.boxSize);
+    };
+
+    let startFood = () => {
+        food = {
+            x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
+            y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
+        };
     };
 
     let restart = () => {
         clearInterval(interval);
         snake = [];
-        points = 0;
-        food = {
-            x: Math.floor(Math.random() * 38 + 1) * defs.boxSize,
-            y: Math.floor(Math.random() * 38 + 1) * defs.boxSize
-        };
+        defs.points = 0;
+        defs.direction = "right";
+        startFood();
+        defs.ended = false;
+        defs.fruits = 0;
         interval = setInterval(updateGame, defs.updateTime);
     }
 
@@ -117,10 +128,8 @@
             snake.pop();
         }
         else {
-            food = {
-                x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
-                y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
-            };
+            defs.fruits++;
+            startFood();
         }
         snake.unshift({x: posX, y: posY});
     }
@@ -174,7 +183,7 @@
      * Detecta colisao na borda inferior
      */
     let colisionDetectBottom = () => {
-        if (snake[0].y > defs.boxSize * 39 && defs.direction=="down") {
+        if (snake[0].y > defs.boxSize * 40 && defs.direction=="down") {
             if (defs.transBorder == true) snake[0].y = 0;
             else gameOver();
         }
@@ -184,7 +193,7 @@
      * Detecta colisao na borda direita
      */
     let colisionDetectRight = () => {
-        if (snake[0].x > defs.boxSize * 39 && defs.direction=="right") {
+        if (snake[0].x > defs.boxSize * 40 && defs.direction=="right") {
             if (defs.transBorder == true) snake[0].x = 0;
             else gameOver();
         }
@@ -214,12 +223,14 @@
      * Encerra o jogo
      */
     let gameOver = () => {
+        defs.ended = true;
         clearInterval(interval);
         alert("Game over!");
     };
 
     let printData = () => {
-        document.getElementById("spnpontos").innerHTML = points;
+        document.getElementById("spnpontos").innerHTML = defs.points;
+        document.getElementById("spnfrutas").innerHTML = defs.fruits;
     };
 
     document.addEventListener('keydown', getKey);
@@ -284,6 +295,7 @@
     };
 
     let start = () => {
+        if (defs.points == 0) restart();
         defs.paused = false;
         document.getElementById("btn-start").style.display = "none";
         document.getElementById("btn-pause").style.display = "block";
@@ -296,20 +308,30 @@
         document.getElementById("btn-pause").style.display = "none";
     }
 
+    let contaPontos = () => {
+        defs.points++;
+    };
+
     /**
      * As rodadas de renderizacao do jogo
      */
     let updateGame = () => {
-        sizeDetect();
-        createBackground();
-        createSnake();
-        printData();
-        if (!defs.paused) {
-            movimento = false;
-            moveSnake();
-            createFood();
-            colisionDetect();
-            render++;
+        if (!defs.rodada) {
+            defs.rodada = true;
+            if (food == null) startFood();
+            sizeDetect();
+            createBackground();
+            createSnake();
+            printData();
+            if (!defs.paused && !defs.ended) {
+                movimento = false;
+                moveSnake();
+                createFood();
+                colisionDetect();
+                contaPontos();
+                render++;
+            }
+            defs.rodada = false;
         }
     }
 

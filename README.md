@@ -15,6 +15,7 @@ Bootcamp: HTML Web Developer
 - Ações Pause e Start
 - Controles pelas teclas W, A, S e D também, além dos direcionais
 - Detecção automática de tamanho da janela, se alterado, redimensiona todos os elementos do jogo
+- Velocidade aumenta a cada 10 pontos
 
 ### Online
 [https://dcorazolla.github.io/dio-jogo-snake/](https://dcorazolla.github.io/dio-jogo-snake/)

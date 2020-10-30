@@ -8,7 +8,7 @@
         boxSize: 15,
         direction: "right",
         transBorder: true,
-        updateTime: 130,
+        updateTime: 150,
         paused: true,
         winWidth: 0,
         winHeight: 0,
@@ -19,7 +19,7 @@
         ended: false,
         rodada: false,
         points: 0,
-        fruits: 0
+        fruits: 0,
     };
 
     // pega o canvas
@@ -97,6 +97,7 @@
         clearInterval(interval);
         snake = [];
         defs.points = 0;
+        defs.updateTime = 150;
         defs.direction = "right";
         startFood();
         defs.ended = false;
@@ -342,6 +343,11 @@
 
     let contaPontos = () => {
         defs.points++;
+        if (defs.points % 100 == 0 && defs.updateTime > 50) {
+            defs.updateTime -= 10;
+            clearInterval(interval);
+            interval = setInterval(updateGame, defs.updateTime);
+        }
     };
 
     /**

@@ -8,7 +8,7 @@
         boxSize: 15,
         direction: "right",
         transBorder: true,
-        updateTime: 200,
+        updateTime: 130,
         paused: true,
         winWidth: 0,
         winHeight: 0,

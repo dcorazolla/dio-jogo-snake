@@ -55,7 +55,11 @@ button {
 .tecla {
     width: 30px;
     height: 30px;
-    border: 1px solid #000;
-    background-color: #fff;
+    border: 1px solid #fff;
+    color: #fff;
+    font-weight: 600;
+    background-color: rgb(31, 157, 230);
     padding: 2px;
+    text-align: center;
+    text-decoration: none;
 }

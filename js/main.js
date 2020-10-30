@@ -294,11 +294,11 @@
         let size = 0;
         // paisagem - se a tela tiver largura maior que altura
         if (defs.winWidth >= defs.winHeight) {
-            size = Math.floor((defs.winHeight - defs.panelHeight) * 0.9);
+            size = Math.floor((defs.winHeight - defs.panelHeight));
         }
         // retrato - se a tela for mais alta
         else {
-            size = Math.floor(defs.winWidth * 0.9);
+            size = Math.floor(defs.winWidth);
         }
         // definindo tamanho do box.
         // maior divisivel por 40, menor do que tamanho do jogo

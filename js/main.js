@@ -134,6 +134,38 @@
         snake.unshift({x: posX, y: posY});
     }
 
+    let mouseActionUp = () => {
+        if (defs.direction != "down") {
+            defs.direction = "up";
+            movimento = true;
+        }
+        return false;
+    }
+
+    let mouseActionDown = () => {
+        if (defs.direction != "up") {
+            defs.direction = "down";
+            movimento = true;
+        }
+        return false;
+    }
+
+    let mouseActionLeft = () => {
+        if (defs.direction != "right") {
+            defs.direction = "left";
+            movimento = true;
+        }
+        return false;
+    }
+
+    let mouseActionRight = () => {
+        if (defs.direction != "left") {
+            defs.direction = "right";
+            movimento = true;
+        }
+        return false;
+    }
+
     /**
      * Detecta tecla pressionada
      * @param {EventListener} event 

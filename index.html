@@ -9,12 +9,24 @@
 <body>
     <canvas id="snake-game"></canvas>
     <div id="painel">
-        <p><strong>Pontos</strong> <span id="spnpontos">0</span> <strong>Frutas</strong> <span id="spnfrutas">0</span></p>
-        <p><label><strong>Atravessa bordas</strong> <input type="checkbox" onclick="changeStatus(this);" checked /></label></p>
-        <div class="botoes">
-            <button id="btn-start" onclick="start(this);">> Start</button>
-            <button id="btn-pause" onclick="pause(this);" style="display: none;">|| Pause</button>
-            <button id="btn-restart" onclick="restart(this);" style="display: none;">< Restart</button>
+        <div class="pontuacao">
+            <p><strong>Pontos</strong> <span id="spnpontos">0</span> <strong>Frutas</strong> <span id="spnfrutas">0</span></p>
+            <p><label><strong>Atravessa bordas</strong> <input type="checkbox" onclick="changeStatus(this);" checked /></label></p>
+            <div class="botoes">
+                <button id="btn-start" onclick="start(this);">> Start</button>
+                <button id="btn-pause" onclick="pause(this);" style="display: none;">|| Pause</button>
+                <button id="btn-restart" onclick="restart(this);" style="display: none;">< Restart</button>
+            </div>
+        </div>
+        <div class="controles">
+            <div class="linha">
+                <a class="tecla" href="#" onclick="mouseActionUp()">W</a>
+            </div>
+            <div class="linha">
+                <a class="tecla" href="#" onclick="mouseActionLeft()">A</a>
+                <a class="tecla" href="#" onclick="mouseActionDown()">S</a>
+                <a class="tecla" href="#" onclick="mouseActionRight()">D</a>
+            </div>
         </div>
     </div>
     <script src="./js/main.js"></script>

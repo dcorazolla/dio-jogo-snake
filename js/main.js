@@ -7,7 +7,7 @@
         bgColor: "#000",
         boxSize: 15,
         direction: "right",
-        transBorder: false,
+        transBorder: true,
         updateTime: 200,
         paused: true,
         winWidth: 0,
@@ -39,7 +39,6 @@
     let render = 0;
 
     let changeStatus = (el) => {
-        console.log(el.checked);
         if (el.checked) {
             el.checked = true;
             defs.transBorder = true;
@@ -287,6 +286,19 @@
         }
     };
 
+    let start = () => {
+        defs.paused = false;
+        document.getElementById("btn-start").style.display = "none";
+        document.getElementById("btn-pause").style.display = "block";
+        document.getElementById("btn-restart").style.display = "block";
+    };
+
+    let pause = () => {
+        defs.paused = true;
+        document.getElementById("btn-start").style.display = "block";
+        document.getElementById("btn-pause").style.display = "none";
+    }
+
     /**
      * As rodadas de renderizacao do jogo
      */
@@ -297,8 +309,8 @@
         printData();
         if (!defs.paused) {
             movimento = false;
-            createFood();
             moveSnake();
+            createFood();
             colisionDetect();
             render++;
         }

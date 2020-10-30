@@ -216,7 +216,7 @@
      * Detecta colisao na borda inferior
      */
     let colisionDetectBottom = () => {
-        if (snake[0].y > defs.boxSize * 40 && defs.direction=="down") {
+        if (snake[0].y >= defs.boxSize * 40 && defs.direction=="down") {
             if (defs.transBorder == true) snake[0].y = 0;
             else gameOver();
         }
@@ -226,7 +226,7 @@
      * Detecta colisao na borda direita
      */
     let colisionDetectRight = () => {
-        if (snake[0].x > defs.boxSize * 40 && defs.direction=="right") {
+        if (snake[0].x >= defs.boxSize * 40 && defs.direction=="right") {
             if (defs.transBorder == true) snake[0].x = 0;
             else gameOver();
         }

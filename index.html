@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <canvas id="snake-game" width="600" height="600"></canvas>
+    <canvas id="snake-game"></canvas>
     <div id="painel">
         <p><strong>Pontos</strong> <span id="spnpontos">0</span></p>
         <p><label><strong>Atravessa bordas</strong> <input type="checkbox" onclick="changeStatus(this);" /></label></p>
-        <p><button id="btn-restart" onclick="restart(this);">Restart</button></p>
+        <p class="botoes">
+            <button id="btn-start" onclick="start(this);">> Start</button>
+            <button id="btn-pause" onclick="pause(this);" style="display: none;">|| Pause</button>
+            <button id="btn-restart" onclick="restart(this);" style="display: none;">< Restart</button>
+        </p>
     </div>
     <script src="./js/main.js"></script>
 </body>

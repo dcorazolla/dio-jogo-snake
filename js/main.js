@@ -8,25 +8,28 @@
         boxSize: 15,
         direction: "right",
         transBorder: false,
-        updateTime: 200
+        updateTime: 200,
+        paused: true,
+        winWidth: 0,
+        winHeight: 0,
+        gameWidth: 0,
+        gameHeight: 0,
+        panelWidth: 0,
+        panelHeight: 0
     };
 
     // pega o canvas
     let cv = document.getElementById("snake-game");
     // pega o contexto 2d do canvas
     let ct = cv.getContext("2d");
+    let pn = document.getElementById("painel");
 
     let movimento = false;
 
     /**
      * A cobra
      */
-    let snake = [
-        {
-            x: defs.boxSize * 19,
-            y: defs.boxSize * 19
-        }
-    ];
+    let snake = [];
     let food = {
         x: Math.floor(Math.random() * 37 + 1) * defs.boxSize,
         y: Math.floor(Math.random() * 37 + 1) * defs.boxSize
@@ -61,13 +64,18 @@
     let createSnake = () => {
         let green = 0;
         let size = snake.length;
+        // se cobra estiver vazio, cria primeiro box
+        if (size==0) {
+            snake.push({x: defs.boxSize * 19, y: defs.boxSize * 19});
+        }
+        // indice de mudanca de cor
         let sumColor = parseInt(255/size);
+        // desenha cobra
         for (let i=0; i<size; i++) {
             ct.fillStyle = "rgb(255, " + green + ", 0)"; //defs.boxHeadColor;
             ct.fillRect(snake[i].x, snake[i].y, defs.boxSize, defs.boxSize);
             green += sumColor;
         }
-        points++;
     };
 
     let createFood = () => {
@@ -79,8 +87,7 @@
         clearInterval(interval);
         snake = [
             {
-                x: defs.boxSize * 19,
-                y: defs.boxSize * 19
+                
             }
         ];
         points = 0;
@@ -218,21 +225,86 @@
 
     document.addEventListener('keydown', getKey);
 
+    let sizeDetect = () => {
+        let winWidth = window.innerWidth;
+        let winHeight = window.innerHeight;
+
+        if (defs.winWidth != winWidth || defs.winHeight != winHeight) {
+            sizeModify(winWidth, winHeight);
+        }
+    };
+
+    let sizeModify = (width, height) => {
+
+        let oldWidth = defs.winWidth;
+        let oldHeight = defs.winHeight;
+        let oldBoxSize = defs.boxSize;
+
+        defs.winWidth = width;
+        defs.winHeight = height;
+   
+        // pegando altura do painel
+        defs.panelHeight = pn.offsetHeight;
+        // definindo tamanho do canvas em 90% do menor tamanho da tela
+        let size = 0;
+        // paisagem - se a tela tiver largura maior que altura
+        if (defs.winWidth >= defs.winHeight) {
+            size = Math.floor((defs.winHeight - defs.panelHeight) * 0.9);
+        }
+        // retrato - se a tela for mais alta
+        else {
+            size = Math.floor(defs.winWidth * 0.9);
+        }
+        // definindo tamanho do box.
+        // maior divisivel por 40, menor do que tamanho do jogo
+        // console.log(size);
+        while (true) {
+            if (size%40 == 0) break;
+            size--;
+        }
+        // definindo tamanho do box
+        defs.boxSize = size / 40;
+        // ajustando tamanho do canvas
+        defs.gameWidth = defs.gameHeight = size;
+        // definindo largura do painel
+        defs.panelWidth = size;
+
+        // ajustando elementos da tela
+        cv.width = defs.gameWidth;
+        cv.height = defs.gameHeight;
+        pn.setAttribute("style","width:" + (defs.panelWidth - 20) + "px");
+
+        snakeSizeModify();
+    };
+    
+    let snakeSizeModify = (boxSize, wid) => {
+        if (snake.length > 0) {
+            let propY = snake[0].y / defs.boxSize;
+            let propX = snake[0].x / defs.boxSize;
+            console.log(defs.boxSize);
+            console.log(defs.boxSize);
+            // console.log(propY);
+        }
+    };
+
     /**
      * As rodadas de renderizacao do jogo
      */
     let updateGame = () => {
+        sizeDetect();
         createBackground();
         createSnake();
-        movimento = false;
-        createFood();
-        moveSnake();
-        colisionDetect();
         printData();
-        render++;
-        // setTimeout(updateGame, defs.updateTime);
+        if (!defs.paused) {
+            movimento = false;
+            createFood();
+            moveSnake();
+            colisionDetect();
+            render++;
+        }
     }
 
+    // startConfigs();
     let interval = setInterval(updateGame, defs.updateTime);
 
 // };

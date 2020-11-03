@@ -59,6 +59,67 @@
         ct.fillRect(0, 0, defs.boxSize * 40, defs.boxSize * 40);
     };
 
+    let createSquare = (x, y) => {
+        ct.fillRect(x, y, defs.boxSize, defs.boxSize);
+    };
+
+    let createTriangle = (xx, yy, rotacao) => {
+        let triangle = [
+            {x: xx, y: yy + defs.boxSize},
+            {x: xx + Math.floor(defs.boxSize / 2), y: yy},
+            {x: xx + defs.boxSize, y: yy + defs.boxSize}
+        ];
+        if (rotacao == 1) {
+            triangle = [
+                {x: xx, y: yy},
+                {x: xx + defs.boxSize, y: yy},
+                {x: xx + defs.boxSize, y: yy + defs.boxSize}
+            ];
+        }
+        else if (rotacao == 2) {
+            triangle = [
+                {x: xx, y: yy},
+                {x: xx + defs.boxSize, y: yy + Math.floor(defs.boxSize / 2)},
+                {x: xx, y: yy + defs.boxSize}
+            ];
+        }
+        else if (rotacao == 3) {
+            triangle = [
+                {x: xx + defs.boxSize, y: yy},
+                {x: xx + defs.boxSize, y: yy + defs.boxSize},
+                {x: xx, y: yy + defs.boxSize}
+            ];
+        }
+        else if (rotacao == 4) {
+            triangle = [
+                {x: xx, y: yy},
+                {x: xx + defs.boxSize, y: yy},
+                {x: xx + Math.floor(defs.boxSize / 2), y: yy + defs.boxSize}
+            ];
+        }
+        else if (rotacao == 5) {
+            triangle = [
+                {x: xx, y: yy},
+                {x: xx + defs.boxSize, y: yy + defs.boxSize},
+                {x: xx, y: yy + defs.boxSize}
+            ];
+        }
+        else if (rotacao == 6) {
+            triangle = [
+                {x: xx + defs.boxSize, y: yy},
+                {x: xx + defs.boxSize, y: yy + defs.boxSize},
+                {x: xx, y: yy + Math.floor(defs.boxSize / 2)}
+            ];
+        }
+        ct.beginPath();
+        ct.moveTo(triangle[0].x, triangle[0].y);
+        ct.lineTo(triangle[1].x, triangle[1].y);
+        ct.lineTo(triangle[2].x, triangle[2].y);
+        // ct.rotate((Math.PI / 180) * 15);
+        ct.fill();
+        ct.closePath();
+    };
+
     /**
      * Desenha a cobra
      */
@@ -68,13 +129,33 @@
         // se cobra estiver vazio, cria primeiro box
         if (size==0) {
             snake.push({x: defs.boxSize * 19, y: defs.boxSize * 19});
+            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 19});
+            // snake.push({x: defs.boxSize * 17, y: defs.boxSize * 19});
+            // snake.push({x: defs.boxSize * 17, y: defs.boxSize * 18});
+            // snake.push({x: defs.boxSize * 17, y: defs.boxSize * 17});
+            // snake.push({x: defs.boxSize * 14, y: defs.boxSize * 19});
+            // snake.push({x: defs.boxSize * 13, y: defs.boxSize * 19});
         }
         // indice de mudanca de cor
         let sumColor = parseInt(255/size);
         // desenha cobra
         for (let i=0; i<size; i++) {
-            ct.fillStyle = "rgb(255, " + green + ", 0)"; //defs.boxHeadColor;
-            ct.fillRect(snake[i].x, snake[i].y, defs.boxSize, defs.boxSize);
+            ct.fillStyle = "rgba(255, " + green + ", 0, 1)";
+            if (size > 1 && i == (size-1)) {
+                let rotacao = 0;
+                if (snake[i].x == snake[i-1].x) {
+                    if (snake[i].y > snake[i-1].y) rotacao = 4;
+                }
+                else {
+                    if (snake[i].x < snake[i-1].x) rotacao = 6;
+                    else rotacao = 2;
+                }
+                createTriangle(snake[i].x, snake[i].y, rotacao);
+            }
+            else {
+                createSquare(snake[i].x, snake[i].y);
+            }
+            // createTriangle(snake[i].x, snake[i].y, i);
             green += sumColor;
         }
     };

@@ -3,7 +3,7 @@ Recriação do famoso jogo da cobrinha. HTML JavaScript CSS
 ![Imagem](https://github.com/dcorazolla/dio-jogo-snake/raw/main/img/print.png)
 ![Imagem](https://github.com/dcorazolla/dio-jogo-snake/raw/main/img/print2.png)
 
-Entrega do projeto de curso da Digital Inovation One
+Entrega do projeto de curso da Digital Innovation One
 
 Bootcamp: HTML Web Developer
 

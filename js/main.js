@@ -140,7 +140,7 @@
     let mouseActionUp = () => {
         if (defs.direction != "down") {
             defs.direction = "up";
-            movimento = true;
+            // movimento = true;
         }
         return false;
     }
@@ -270,6 +270,14 @@
     };
 
     document.addEventListener('keydown', getKey);
+    document.getElementById("buttonUp").addEventListener('mousedown', mouseActionUp);
+    document.getElementById("buttonUp").addEventListener('touchstart', mouseActionUp);
+    document.getElementById("buttonLeft").addEventListener('mousedown', mouseActionLeft);
+    document.getElementById("buttonLeft").addEventListener('touchstart', mouseActionLeft);
+    document.getElementById("buttonDown").addEventListener('mousedown', mouseActionDown);
+    document.getElementById("buttonDown").addEventListener('touchstart', mouseActionDown);
+    document.getElementById("buttonRight").addEventListener('mousedown', mouseActionRight);
+    document.getElementById("buttonRight").addEventListener('touchstart', mouseActionRight);
 
     let sizeDetect = () => {
         let winWidth = window.innerWidth;

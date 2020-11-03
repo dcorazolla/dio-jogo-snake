@@ -142,20 +142,19 @@
         for (let i=0; i<size; i++) {
             ct.fillStyle = "rgba(255, " + green + ", 0, 1)";
             if (size > 1 && i == (size-1)) {
-                let rotacao = 0;
+                let rotacao = 3;
                 if (snake[i].x == snake[i-1].x) {
-                    if (snake[i].y > snake[i-1].y) rotacao = 4;
+                    if (snake[i].y > snake[i-1].y) rotacao = 1;
                 }
                 else {
-                    if (snake[i].x < snake[i-1].x) rotacao = 6;
-                    else rotacao = 2;
+                    if (snake[i].x < snake[i-1].x) rotacao = 3;
+                    else rotacao = 5;
                 }
                 createTriangle(snake[i].x, snake[i].y, rotacao);
             }
             else {
                 createSquare(snake[i].x, snake[i].y);
             }
-            // createTriangle(snake[i].x, snake[i].y, i);
             green += sumColor;
         }
     };
@@ -383,11 +382,11 @@
         let size = 0;
         // paisagem - se a tela tiver largura maior que altura
         if (defs.winWidth >= defs.winHeight) {
-            size = Math.floor((defs.winHeight - defs.panelHeight));
+            size = Math.floor((defs.winHeight - defs.panelHeight - 50));
         }
         // retrato - se a tela for mais alta
         else {
-            size = Math.floor(defs.winWidth);
+            size = Math.floor((defs.winWidth - 50));
         }
         // definindo tamanho do box.
         // maior divisivel por 40, menor do que tamanho do jogo

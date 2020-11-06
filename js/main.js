@@ -164,7 +164,12 @@
             startFood();
         }
         ct.fillStyle = "green";
-        ct.fillRect(food.x, food.y, defs.boxSize, defs.boxSize);
+        // ct.arc(food.x, food.y, );
+        ct.beginPath();
+        ct.arc(food.x + Math.floor(defs.boxSize/2), food.y + Math.floor(defs.boxSize/2), Math.floor(defs.boxSize/2), 0, 2*Math.PI);
+        ct.fill();
+        ct.closePath();
+        //ct.fillRect(food.x, food.y, defs.boxSize, defs.boxSize);
     };
 
     let startFood = () => {

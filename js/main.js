@@ -137,61 +137,68 @@
         if (size==0) {
             snake.push({x: defs.boxSize * 19, y: defs.boxSize * 19});
             snake.push({x: defs.boxSize * 18, y: defs.boxSize * 19});
-            snake.push({x: defs.boxSize * 17, y: defs.boxSize * 19});
-            snake.push({x: defs.boxSize * 17, y: defs.boxSize * 20});
-            snake.push({x: defs.boxSize * 17, y: defs.boxSize * 21});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 21});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 22});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 23});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 24});
-            snake.push({x: defs.boxSize * 17, y: defs.boxSize * 24});
-            snake.push({x: defs.boxSize * 16, y: defs.boxSize * 24});
-            snake.push({x: defs.boxSize * 16, y: defs.boxSize * 23});
-            snake.push({x: defs.boxSize * 15, y: defs.boxSize * 23});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 23});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 22});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 21});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 20});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 19});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 18});
-            snake.push({x: defs.boxSize * 14, y: defs.boxSize * 17});
-            snake.push({x: defs.boxSize * 15, y: defs.boxSize * 17});
-            snake.push({x: defs.boxSize * 16, y: defs.boxSize * 17});
-            snake.push({x: defs.boxSize * 17, y: defs.boxSize * 17});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 17});
-            snake.push({x: defs.boxSize * 18, y: defs.boxSize * 17});
         }
         // indice de mudanca de cor
         let sumColor = parseInt(255/size);
         // desenha cobra
         for (let i=0; i<size; i++) {
             ct.fillStyle = "rgba(255, " + green + ", 0, 1)";
-            if (size > 1 && i == (size-1)) {
-                let rotacao = 3;
-                if (snake[i].x == snake[i-1].x) {
-                    if (snake[i].y > snake[i-1].y) rotacao = 1;
+            // if (i == 0) {
+            //     ct.fillStyle = "rgba(255, " + green + ", 0, 1)";
+            //     createSquare(snake[i].x, snake[i].y);
+            //     let eyesize = Math.floor(defs.boxSize/4);
+            //     let eyex = snake[i].x + (eyesize * 2);
+            //     let eyey = snake[i].y + (eyesize * 2);
+            //     if (direction == "right") {
+                    
+            //     }
+                // ct.fillStyle = defs.bgColor;
+                // ct.fillRect(eyex, eyey, eyesize, eyesize);
+                // ct.fillStyle = "rgba(255, " + green + ", 0, 1)";
+            // }
+            // else {
+                if (size > 1 && i == (size-1)) {
+                    let rotacao = 3;
+                    if (snake[i].x == snake[i-1].x) {
+                        if (snake[i].y > snake[i-1].y) rotacao = 1;
+                    }
+                    else {
+                        if (snake[i].x < snake[i-1].x) rotacao = 3;
+                        else rotacao = 5;
+                    }
+                    createTriangle(snake[i].x, snake[i].y, rotacao);
+                }
+                else if (i>0 && i<(size-1) && snake[i-1].x != snake[i+1].x && snake[i-1].y != snake[i+1].y) {
+                    let rotacao = 0;
+                    if ((snake[i].x == snake[i-1].x && snake[i].y < snake[i-1].y) && (snake[i].x > snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 5;
+                    else if ((snake[i].x < snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y < snake[i+1].y)) rotacao = 3;
+                    else if ((snake[i].x > snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y < snake[i+1].y)) rotacao = 5;
+                    else if ((snake[i].x > snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y > snake[i+1].y)) rotacao = 7;
+                    else if ((snake[i].x == snake[i-1].x && snake[i].y > snake[i-1].y) && (snake[i].x > snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 7;
+                    else if ((snake[i].x == snake[i-1].x && snake[i].y < snake[i-1].y) && (snake[i].x < snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 3;
+                    else rotacao = 1;
+                    createTriangle(snake[i].x, snake[i].y, rotacao);
                 }
                 else {
-                    if (snake[i].x < snake[i-1].x) rotacao = 3;
-                    else rotacao = 5;
+                    createSquare(snake[i].x, snake[i].y);
+                    if (i == 0) {
+                        let eyesize = Math.floor(defs.boxSize/4);
+                        let eyex = snake[i].x + eyesize;
+                        let eyey = snake[i].y + Math.floor(eyesize/2);
+                        if (defs.direction == "left") {
+                            eyex = snake[i].x + (eyesize * 2);
+                        }
+                        else if (defs.direction == "up") {
+                            eyey = snake[i].y + eyesize * 2;
+                            eyex = snake[i].x + Math.floor(eyesize/2);
+                        }
+                        else if (defs.direction == "down") {
+                            eyex = snake[i].x + Math.floor(eyesize/2);
+                        }
+                        ct.clearRect(eyex, eyey, eyesize, eyesize);
+                    }
                 }
-                createTriangle(snake[i].x, snake[i].y, rotacao);
-            }
-            else if (i>0 && i<(size-1) && snake[i-1].x != snake[i+1].x && snake[i-1].y != snake[i+1].y) {
-                let rotacao = 0;
-                if ((snake[i].x == snake[i-1].x && snake[i].y < snake[i-1].y) && (snake[i].x > snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 5;
-                else if ((snake[i].x < snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y < snake[i+1].y)) rotacao = 3;
-                else if ((snake[i].x > snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y < snake[i+1].y)) rotacao = 5;
-                else if ((snake[i].x > snake[i-1].x && snake[i].y == snake[i-1].y) && (snake[i].x == snake[i+1].x && snake[i].y > snake[i+1].y)) rotacao = 7;
-                else if ((snake[i].x == snake[i-1].x && snake[i].y > snake[i-1].y) && (snake[i].x > snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 7;
-                else if ((snake[i].x == snake[i-1].x && snake[i].y < snake[i-1].y) && (snake[i].x < snake[i+1].x && snake[i].y == snake[i+1].y)) rotacao = 3;
-                // else if (snake[i].y == snake[i-1].y && snake[i].x == snake[i+1].x) rotacao = 1;
-                else rotacao = 1;
-                createTriangle(snake[i].x, snake[i].y, rotacao);
-            }
-            else {
-                createSquare(snake[i].x, snake[i].y);
-            }
+            // }
             green += sumColor;
         }
     };
